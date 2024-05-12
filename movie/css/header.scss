@@ -1,0 +1,116 @@
+@use './mixin' as m;
+
+header{
+  position: fixed;
+  z-index: 100;
+  top: 0;left: 0;
+  width: 100%;
+  background-color: var(--navy);
+  background-image: url(../img/check-pattern.png);
+  background-size: 15px;
+  @include m.box-shadow;
+  animation: bgmove 150s infinite linear;
+  @media #{m.$min-lg}{
+    height: 80px;
+  }//header min-lg
+  @media #{m.$max-lg}{
+    height: 60px;
+  }//header max-lg
+  .center{
+    width: 95%;
+    margin: 0 auto;
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    h1{
+      height: 50%;
+      a{
+        height: 100%;
+        display: flex;
+        perspective: 1000px;
+        img{
+          height: 100%;
+          margin-right: 15px;
+          transition: all .5s;
+        }//img
+      }//a
+      &:hover{
+        img:first-of-type{
+          transform: rotateY(360deg);
+        }
+        img:last-child{
+          transform: rotateX(360deg);
+        }
+      }//h1:hover
+    }//h1
+    .gnb{
+      position: relative;
+      div.menu-list{
+        position: absolute;
+        top: 0;
+        right: 110%;
+        display: inline-block;
+        button.toggle-btn{
+          transition: all .3s;
+          &:active{
+            color: var(--green);
+          }//hover
+        }//button.toggle-btn
+        ul{
+          display: none;
+          position: absolute;
+          padding: 15px;
+          background: #000;
+          top: 30px;
+          left: 50%;
+          transform: translate(-50%);
+          border-radius: 5px;
+          &.active{
+            display: block;
+          }
+          li{
+            margin: 3px 0;
+            white-space: nowrap;
+            a:hover{
+              color: var(--green);
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+      a.goto-search{
+        font-weight: 600;
+        transition: all .3s;
+        &:hover{
+          color: var(--green);
+        }//a:hover
+        i{
+          
+        }
+      }//a
+    }//gnb
+  }//center
+}//header
+.top-btn{
+  position: fixed;
+  z-index: 90;
+  right: 20px;
+  bottom: 20px;
+  width: 40px;
+  height: 40px;
+  background: var(--sky);
+  transition: all .5s;
+  opacity: 0;
+  pointer-events: none;
+  @include m.box-shadow;
+  @media (hover:hover){
+    &:hover{
+      background: var(--green);
+    }//hover
+  }//media hover:hover
+  &.active{
+    opacity: 1;
+    pointer-events: all;
+  }//active
+}//top-btn

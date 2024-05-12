@@ -1,0 +1,107 @@
+@use '../mixin' as m;
+
+section.home-visual{//swiper에게는 넓이를 주면 안됨 넓이를 준다면 최상위에만 줄 것 swiper는 높이만 주기 
+  position: relative;
+  height: min(70vh, 450px);
+  background: var(--navy);
+  overflow: hidden;
+  margin-bottom: 5vh;
+  cursor: grab;
+  @include m.box-shadow;
+  &::before{
+    content: '';
+    pointer-events: none;
+    @include m.pos-center;
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    border: 1px solid rgba(#FFF,.3);
+    z-index: 11;
+  }//home-visual::before
+  div.swiper-wrapper{//swiper에게 넓이주지않기
+    height: 100%;
+    figure.swiper-slide{
+      position: relative;
+      height: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
+      &.swiper-slide-active img{
+        transform: scale(100%);
+      }
+      &:hover img{
+        filter: brightness(80%);
+      }
+      img{
+        @include m.cover;
+        filter: brightness(60%);
+        transform: scale(1.1);
+        transition: transform 10s linear, filter 1s;
+      }//img
+      figcaption{
+        position: absolute;
+        width: 90%;
+        left: 5%;
+        top:50%;
+        transform: translateY(-50%);
+        small{
+          font-weight: 600;
+          font-size: 1.2em;
+        }//small
+        h6{
+          margin-top: 5px;
+          font-size: min(8vw, 5em);
+          white-space: nowrap;
+          line-height: 1.2em;
+          font-weight: 600;
+          @media #{m.$max-xlg}{
+            @include m.ellipsis;
+          }//max-xlg
+        }//h6
+        p{
+          margin: 20px 0;
+          max-width: 500px;
+        }//p
+        button{
+          i{
+            margin-right: 10px
+          }
+          &.play-btn{
+            @include m.button(#FFF,#FFF,rgba(#FFF,.3),#000,#FFF,rgba(#FFF,.8));
+            margin-right: 5px
+          }//.play-btn
+          &.detail-btn{
+            @include m.button(#FFF,#FFF,rgba(#000,.3),#FFF,#000,rgba(#000,.8));
+          }//.detail-btn
+        }//button
+
+      }//figcaption
+    }//swiper-slide
+  }//swiper-wrapper
+  button.wheel-btn{
+    position: absolute;
+    z-index: 12;
+    left: calc(50% - 20px);
+    bottom: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(#FFF,.3);
+    box-sizing: border-box;
+    border: 1px solid rgba(#FFF,.5);
+    &::before{
+      content: '';
+      @include m.pos-center;
+      border-radius: 50%;
+      border: 1px solid rgba(#FFF,.5);
+      width: 30px;
+      height: 30px;
+    }//button::before
+    i{
+      color: rgba(#FFF,.7);
+      animation: jump .3s infinite linear alternate;
+    }
+  }//button.wheel-btn
+  @keyframes jump {
+    0%{transform: translateY(-3px);}
+    100%{transform: translateY(3px);}
+  }
+}//home-visual

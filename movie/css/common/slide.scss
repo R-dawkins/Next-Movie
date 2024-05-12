@@ -1,0 +1,33 @@
+@use '../mixin' as m;
+.slide{
+  position: absolute;
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: url(../../img/mask.png);//css표준으로 적용되지않은것들은 -webkit-을 붙여줘야하는것들이 있다 (브라우저마다 다름)
+  -webkit-mask-size:100% 100%;//비표준
+  mask-image: url(../../img/mask.png);//표준
+  mask-size:100% 100%;//표준
+//vender프리픽스를 할 때는 비표준으로한번 표준으로한번적어줘야한다
+  @media #{m.$min-lg}{
+    top:80px;
+    height:40vh;
+    filter: brightness(40%);
+  }
+  @media #{m.$max-lg}{
+    top: 60px;
+    height: 50vh;
+    filter: brightness(70%);
+  }
+  img{
+    position: absolute;
+    transform: scale(1.1);
+    opacity: 0;
+    transition: transform 15s linear, opacity 1s;
+    @include m.cover;
+    &.active{
+      opacity: 1;
+      transform: scale(1);
+
+    }
+  }//img
+}//silde

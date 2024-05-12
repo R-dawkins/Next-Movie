@@ -1,0 +1,251 @@
+@use '../mixin.scss' as m;
+
+body{
+  background-color: var(--navy);
+  background-image: url(../../img/line-pattern.png);
+  background-size: 15px;
+  animation: bgmove 100s infinite linear;
+  @include m.scrollbar;
+  @media #{m.$min-lg}{
+    padding-top: 80px;
+  }//header min-lg
+  @media #{m.$max-lg}{
+    padding-top: 60px;
+  }//header max-lg
+  @keyframes bgmove {
+    0%{background-position: 0 0;}
+    100%{background-position: -100% 0;}
+  }//bgmove
+  main{
+    min-height: 50vh;
+    overflow: hidden
+  }//main
+
+}//body
+
+section.common-section{
+  padding: 30px 0;
+  margin: 0 auto;
+  p.no-data{
+    font-style: italic;
+    margin-left: 10px;
+    color: var(--green);
+    text-decoration: line-through;
+  }//no-data
+  h2{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    i{
+      color: var(--sky);
+      margin-right: 10px;
+      font-size: 1.5em;
+    }//i
+    em{
+      font-size: 1.5em;
+      font-weight: 600;
+    }
+    &::after{
+    content: '';
+      flex:1;
+      border-top: 1px solid rgba(#FFF,.3);
+      margin-left: 10px;
+    }//h2::after
+  }//h2
+}//section.common-section
+//가상엘리먼트는 자바스크립트로 특정할수 없다
+
+section.movie-grid-section{
+  div.grid-container{
+  
+    figure{
+      padding: 0 10px;
+      box-sizing: border-box; //swiper에서 크기 계산이 잘못 되기 때문에 박스사이징으로 패딩크기를 인식시켜줘야함
+      height: auto; //flex를 줬는데 swiper플러그인이 높이를 지정해서 크기가 달라짐
+      a{
+        display: block;
+        height: 100%;
+        background: var(--sky);
+        transition: all .3s;
+        &:hover{
+          position: relative;
+          transform: scale(1.1);
+          z-index: 11;
+          background: var(--green);
+          div.imgbox{
+            img{
+            filter: brightness(100%);
+            }
+          }
+        }//a:hover
+        div.imgbox{
+          position: relative;
+          overflow: hidden;
+          img{
+            width: 100%;
+            filter: brightness(80%);
+            transition: all .3s;
+          }//img
+          span{
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            right: -40px;
+            top: -40px;
+            transform: rotate(45deg);
+          }
+          small{
+            position: absolute;
+            columns: #FFF;
+            right: 7px;
+            top: 7px;
+          }
+        }//imgbox
+        figcaption{
+          h3,p{
+            @include m.ellipsis
+          }//h3,p
+          h3{
+            font-size: 1.2em;
+            font-weight: 600;
+          }
+          p{
+            font-size: .9em;
+          }
+        }//figcaption
+      }//a
+    }//figure
+  }//div.grid-container
+}//section.movie-grid-section
+
+section.swiper-section{
+  .carousel{
+    position: relative;
+    &::before,&::after{
+      content: '';
+      position: absolute;
+      z-index: 13;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      backdrop-filter: blur(2px) brightness(60%);//자신의 밑에있는 대상을 상대로 적용하는 필터
+    }
+    &::before{right:100%}
+    &::after{left:100%}
+    &:hover{
+      @media (hover: hover){
+        .next,.prev{
+          opacity: 1;
+        }//media next,prev
+      }//media hover
+    }//carousel:hover
+    .next , .prev{
+      display: none;
+      @media(hover:hover){
+        display: block;
+      }
+      position: absolute;
+      top: 50%;
+      z-index: 12;
+      transform: translateY(-50%);
+      font-size: 3em;
+      opacity: 0;
+      transition: opacity .5s;
+    }//next,prev
+    .prev{left:0;}
+    .next{right:0;}
+  }//carousel
+}//setcion.swiper-section
+
+section.wrap-section{
+  .grid-container{
+    display: flex;
+    flex-wrap: wrap;
+    figure{
+      margin-bottom: 20px;
+      @media #{m.$min-xlg}{//1400이상
+        width: 20%;
+      }
+      @media #{m.$xlg}{//1000~1400
+        width: 25%;
+      }
+      @media #{m.$md}{//1000~500
+        width: 33.33%;
+      }
+      @media #{m.$max-sm}{//500이하
+        width: 50%;
+      }
+    }//figure
+  }//grid-container
+}//wrap-section
+
+section.scroll-section{
+  .grid-container{
+    @include m.scrollbar;
+    overflow-x: auto;
+    display: flex; //flex는 부모기준으로 자식크기가바뀌고 inline-flex는 자식크기기준으로 부모크기가 바뀐다 flex는 부모크기고정 - 자식크기유동적, inline-flex는 자식크기고정 - 부모크기유동적
+    padding-bottom: 20px;
+    >*{
+      flex-shrink: 0;
+      box-sizing: border-box;
+      border: 5px solid #EEE;
+      margin-right: 20px;
+      overflow: hidden;
+    &:hover img{
+      filter: brightness(100%);
+      transform: scale(1.1);
+    }//button:hover img
+    img{
+      filter: brightness(70%);
+      transition: all .5s;
+      width: 100%;
+    }//img
+  }//button
+}//.grid-container
+}//section.scroll-section
+
+section.img-section{
+  .grid-container{
+    a{
+      display: block;
+      width: 250px;
+    }//a
+  }//.grid-container
+}//section.img-section
+
+section.video-section{
+  .grid-container{
+    button{
+      width: 250px;
+    }//button
+  }//grid-container
+}//section.video-section
+
+section.people-section{
+  .grid-container{
+    figure{
+      width: 150px;
+      &:hover figcaption{
+        background: var(--sky);
+        em{color:var(--navy)}
+      }
+      figcaption{
+        position: relative;
+        background: var(--navy);
+        padding: 10px;
+        transition: all .3s;
+        em{
+          display: block;
+          color: var(--green);
+          @include m.ellipsis;
+          font-weight: 600;
+        }
+        b{
+          display: block;
+          @include m.ellipsis;
+          font-style: italic;
+        }
+      }
+    }//figure
+  }//grid-container
+}//section.people-section

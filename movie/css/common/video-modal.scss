@@ -1,0 +1,30 @@
+@use '../mixin.scss' as m;
+.video-modal{
+  display: none;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 101;
+  left: 0;top: 0;
+  background: black;
+  img.youtube-ratio{
+    @include m.pos-center;
+    max-width: 90%;
+    max-height: 90%;
+    opacity: 0;
+  }
+  iframe{
+    @include m.pos-center;
+  }
+  .close{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 2em;
+    opacity: .7;
+    transition: all .5s;
+    &:hover{
+      opacity: 1;
+    }//hover
+  }//close
+}//video-modal
